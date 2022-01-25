@@ -8,15 +8,15 @@
 -- ft.header-toc:
 $processor$: toc
 
-- /examples/react-banglore-22-01-2022/
+- examples/react-banglore-22-01-2022/
   React Bangalore
-- /language/
+- language/
   Docs
-- /roadmap/
+- roadmap/
   Roadmap
-- /journal/
+- journal/
   Journal
-- /development/
+- development/
   Development
 - https://github.com/FifthTry/ftd
   Github
@@ -26,91 +26,91 @@ $processor$: toc
 -- dev-toc:
 $processor$: toc
 
-- /changelog/
+- changelog/
   Changelog
-- /roadmap/
+- roadmap/
   Roadmap & RFCs
-- /journal/
+- journal/
   Journal
-- /internals/
+- internals/
   Internals
-- /p1/
+- p1/
   `ftd::p1`: A JSON/YML Replacement
 
 -- ft.toc:
 $processor$: toc
 
-- /language/
+- language/
   FTD Language
-  - /p1-grammar/
+  - p1-grammar/
     `ftd::p1` grammar
-  - /philosophy/
+  - philosophy/
     Philosophy
-  - /data-modelling/
+  - data-modelling/
     Data Modelling
-    - /variables/
+    - variables/
       Variables
-    - /built-in-types/
+    - built-in-types/
       Built-in Types
-    - /record/
+    - record/
       `record`
-    - /or-type/
+    - or-type/
       `or-type`
-    - /list/
+    - list/
       `list`
-    - /reading-data/
+    - reading-data/
       Reading FTD Files
-  - /ui/
+  - ui/
     UI
-    - /component/
+    - component/
       `component`
-    - /kernel/
+    - kernel/
       Kernel Components
-      - /row/
+      - row/
         `ftd.row`
-      - /column/
+      - column/
         `ftd.column`
-      - /text/
+      - text/
         `ftd.text`
-      - /image/
+      - image/
         `ftd.image`
-      - /iframe/
+      - iframe/
         `ftd.iframe`
-      - /integer/
+      - integer/
         `ftd.integer`
-      - /decimal/
+      - decimal/
         `ftd.decimal`
-      - /boolean/
+      - boolean/
         `ftd.boolean`
-      - /common/
+      - common/
         Common Attributes
-      - /text-common/
+      - text-common/
         Common Text Attributes
-      - /container/
+      - container/
         Container Attributes
-    - /container-management/
+    - container-management/
       Container Management
-    - /if/
+    - if/
       `if`: Conditional Components
-    - /if-attr/
+    - if-attr/
       Conditional Attributes
-    - /loop/
+    - loop/
       `$loop$`: Looping Over Lists
-    - /id/
+    - id/
       ID
-    - /event-handling/
+    - event-handling/
       `$event-<event-name>$`: Event Handling
-    - /auto-nesting/
+    - auto-nesting/
       Auto Nesting
-  - /import/
+  - import/
     `import`
-  - /examples/
+  - examples/
     Examples
-    - /creating-a-tree/
+    - creating-a-tree/
       Creating a tree
-  - /library/
+  - library/
     `ftd::Library`
-  - /comments/
+  - comments/
     Comments In `ftd` Files
-- /run-ftd/
+- run-ftd/
   How to run ftd
