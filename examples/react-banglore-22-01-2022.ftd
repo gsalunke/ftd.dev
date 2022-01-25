@@ -1,6 +1,6 @@
 -- import: examples/diagram
 -- import: examples/comic
--- import: fifthtry.github.io/Forest-Theme as ft
+-- import: gsalunke.github.io/Blue-Sapphire as ft
 -- import: fpm
 
 -- integer count: 0
@@ -650,7 +650,7 @@ top: 0
 left: 220
 lang: ftd
 
-\-- import: fifthtry.github.io/Forest-Theme as ft
+\-- import: gsalunke.github.io/Blue-Sapphire as ft
 \-- import: config
 \-- import: fpm
 
