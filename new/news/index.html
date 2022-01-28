@@ -273,18 +273,18 @@ let ftd_utils = {
                 if (((typeof value[key]) === "object") && (reference[key] !== undefined)) {
                     result[key] = ftd_utils.resolve_reference(value[key], reference[key], data);
                 } else if (reference[key] !== undefined && reference[key] !== null) {
-                    result[key] = data[reference[key]]["value"] !== undefined ? data[reference[key]].value : value[key];
+                    result[key] = data[reference[key]]?.value !== undefined ? data[reference[key]].value : value[key];
                 } else {
                     result[key] = (value[key] === "$VALUE" && obj.value !== undefined) ? obj.value : value[key];
                 }
             }
             for (var key of Object.keys(reference)) {
-                if (value[key] === undefined && data[reference[key]]["value"] !== undefined) {
+                if (value[key] === undefined && data[reference[key]]?.value !== undefined) {
                     result[key] = data[reference[key]].value;
                 }
             }
             return result;
-        } else if (reference !== null && reference !== undefined && data[reference] !== undefined && data[reference]["value"] !== undefined) {
+        } else if (reference !== null && reference !== undefined && data[reference]?.value !== undefined) {
             return data[reference]["value"];
         } else {
             return (value === "$VALUE" && obj.value !== undefined) ? obj.value : value;
@@ -966,6 +966,7 @@ function console_print(id, data) {
             (function () {
     const FPM_MOBILE = "fpm#mobile";
     const FPM_DARK_MODE = "fpm#dark-mode"
+    const SYSTEM_DARK_MODE = "fpm#system-dark-mode"
     const FPM_FOLLOW_SYSTEM_DARK_MODE = "fpm#follow-system-dark-mode"
     const DARK_MODE_COOKIE = "fpm-dark-mode";
     const COOKIE_SYSTEM_LIGHT = "system-light";
@@ -1065,6 +1066,7 @@ function console_print(id, data) {
         //       update
         window.ftd.set_bool_for_all(FPM_DARK_MODE, true);
         window.ftd.set_bool_for_all(FPM_FOLLOW_SYSTEM_DARK_MODE, false);
+        window.ftd.set_bool_for_all(SYSTEM_DARK_MODE, system_dark_mode());
         document.body.classList.add(DARK_MODE_CLASS);
         set_cookie(DARK_MODE_COOKIE, COOKIE_DARK_MODE);
     }
@@ -1074,6 +1076,7 @@ function console_print(id, data) {
         //       update
         window.ftd.set_bool_for_all(FPM_DARK_MODE, false);
         window.ftd.set_bool_for_all(FPM_FOLLOW_SYSTEM_DARK_MODE, false);
+        window.ftd.set_bool_for_all(SYSTEM_DARK_MODE, system_dark_mode());
         document.body.classList.remove(DARK_MODE_CLASS);
         set_cookie(DARK_MODE_COOKIE, COOKIE_LIGHT_MODE);
     }
@@ -1082,6 +1085,7 @@ function console_print(id, data) {
         // TODO: coalesce the two set_bool-s into one so there is only one DOM
         //       update
         window.ftd.set_bool_for_all(FPM_FOLLOW_SYSTEM_DARK_MODE, true);
+        window.ftd.set_bool_for_all(SYSTEM_DARK_MODE, system_dark_mode());
         if (system_dark_mode()) {
             window.ftd.set_bool_for_all(FPM_DARK_MODE, true);
             document.body.classList.add(DARK_MODE_CLASS);
