@@ -167,6 +167,7 @@ padding: 10
 -- ftd.text: $msg
 width: fill
 color: $ft.neutral
+font: Roboto
 
 
 -- ftd.row:
@@ -177,6 +178,7 @@ width: fill
 width: fill
 align: right
 color: $ft.neutral
+font: Roboto
 
 
 -- container: outer
@@ -192,6 +194,7 @@ width: fill
 width: fill
 color: $ft.neutral-800
 color if $fpm.dark-mode: $ft.neutral
+font: Roboto
 
 
 We support **markdown** as well.
