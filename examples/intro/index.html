@@ -128,7 +128,7 @@ ul {
 .ft_md code {
     font-size: 0.9em;
     padding: 0.1em 0.25em;
-    background-color: #f0f0f0;
+    background-color: rgba(159, 155, 155, 0.27);
     border-radius: 4px;
 }
 
@@ -144,9 +144,30 @@ ul {
 }
 
 body.fpm-dark .ft_md code {
-    color: black;
+    color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.12);
 }
-</style>
+
+body.fpm-dark .ft_md blockquote {
+    background-color: rgba(240, 240, 240, 0.12);
+}
+
+body.fpm-dark .ft_md a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+body.fpm-dark .ft_md a:visited {
+    color: #a27de7;
+}
+
+body.fpm-dark .ft_md a code {
+    color: #58a6ff;
+}
+
+body.fpm-dark .ft_md a:visited code {
+    color: #a27de7;
+}</style>
     </head>
     <body>
         <div data-id="main:root" style="align-items: flex-start; border-radius: 0px; border-style: solid; border-width: 0px; box-sizing: border-box; display: flex; flex-direction: column; flex-wrap: nowrap; height: 100%; justify-content: flex-start; white-space: initial; width: 100%" class="ft_md"><div data-id="0:main" style="border-radius: 0px; border-style: solid; border-width: 0px; box-sizing: border-box; display: grid; grid-template-areas: 'left right''bottom right'; grid-template-columns: 50% auto; grid-template-rows: 50% auto; height: 100%; white-space: initial; width: 100%" class="ft_md"><div data-id="0,0:main" style="align-self: center; border-radius: 0px; border-style: solid; border-width: 0px; box-sizing: border-box; font-size: 48px; font-weight: 400; grid-area: left; justify-self: center; text-align: left; white-space: initial" class="ft_md">Future Of Writing</div>
@@ -561,6 +582,13 @@ let ftd_utils = {
         }
     },
 
+    is_equal_condition: function (value, condition) {
+        return ((value === condition)
+            || (condition === "$IsNull$" && value.trim().length === 0)
+            || (condition === "$IsNotNull$" && value.trim().length !== 0)
+        );
+    },
+
     handle_action: function (id, target, value, data, ftd_external_children) {
         data[target].value = value.toString();
 
@@ -590,10 +618,7 @@ let ftd_utils = {
                     }
                 } else if (json_dependency.dependency_type === "Visible") {
                     let display = "none";
-                    if ((data[target].value === json_dependency.condition)
-                        || (json_dependency.condition === "$IsNull$" && data[target].value.trim().length === 0)
-                        || (json_dependency.condition === "$IsNotNull$" && data[target].value.trim().length !== 0)
-                    ) {
+                    if (ftd_utils.is_equal_condition(data[target].value, json_dependency.condition)) {
                         let is_flex = !!document.querySelector(`[data-id="${dependency}:${id}"]`).style.flexDirection.length;
                         let is_grid = !!document.querySelector(`[data-id="${dependency}:${id}"]`).style.gridTemplateAreas.length;
                         let is_webkit = !!document.querySelector(`[data-id="${dependency}:${id}"]`).style.webkitLineClamp.length;
@@ -610,11 +635,30 @@ let ftd_utils = {
                     document.querySelector(`[data-id="${dependency}:${id}"]`).style.display = display;
                     ftd_utils.first_child_styling(`${dependency}:${id}`);
 
-                } else if (json_dependency.dependency_type === "Style") {
-                    if (data[target].value === json_dependency.condition) {
+                } else if (json_dependency.dependency_type === "Variable") {
+                    if (ftd_utils.is_equal_condition(data[target].value, json_dependency.condition)) {
                         for (const parameter in json_dependency.parameters) {
-                            let value = json_dependency.parameters[`${parameter}`].value.value;
-                            let important = json_dependency.parameters[`${parameter}`].value.important;
+                            if (data[parameter] !== undefined) {
+                                let value = json_dependency.parameters[parameter].value.value;
+                                ftd_utils.handle_action(id, parameter, value, data, ftd_external_children)
+                            }
+                        }
+                    } else {
+                        for (const parameter in json_dependency.parameters) {
+                            if (data[parameter] !== undefined) {
+                                let default_value = json_dependency.parameters[parameter].default;
+                                if (default_value === null) {
+                                    continue;
+                                }
+                                ftd_utils.handle_action(id, parameter, default_value.value, data, ftd_external_children)
+                            }
+                        }
+                    }
+                } else if (json_dependency.dependency_type === "Style") {
+                    if (ftd_utils.is_equal_condition(data[target].value, json_dependency.condition)) {
+                        for (const parameter in json_dependency.parameters) {
+                            let value = json_dependency.parameters[parameter].value.value;
+                            let important = json_dependency.parameters[parameter].value.important;
                             ftd_utils.set_style(parameter, `${dependency}:${id}`, value, important);
                             if (!styles_edited.includes(parameter)) {
                                 styles_edited.push(parameter);
@@ -622,7 +666,7 @@ let ftd_utils = {
                         }
                     } else {
                         for (const parameter in json_dependency.parameters) {
-                            let default_value = json_dependency.parameters[`${parameter}`].default;
+                            let default_value = json_dependency.parameters[parameter].default;
                             if (!styles_edited.includes(parameter)) {
                                 if (default_value === null) {
                                     if (["border-left-width", "border-right-width", "border-top-width", "border-bottom-width"].includes(parameter)) {
@@ -994,22 +1038,22 @@ function console_print(id, data) {
 
     function is_mobile() {
         // not at all sure about this functions logic.
-        let width = window.visualViewport.width;
+        let width = window.innerWidth;
 
         // in future we may want to have more than one break points, and then
         // we may also want the theme builders to decide where the breakpoints
         // should go. we should be able to fetch fpm variables here, or maybe
         // simply pass the width, user agent etc to fpm and let people put the
         // checks on width user agent etc, but it would be good if we can
-        // standardise few breakpoints. or maybe we should do both, some
+        // standardize few breakpoints. or maybe we should do both, some
         // standard breakpoints and pass the raw data.
 
         // we would then rename this function to detect_device() which will
         // return one of "desktop", "tablet", "mobile". and also maybe have
         // another function detect_orientation(), "landscape" and "portrait" etc,
         // and instead of setting `fpm-ui#mobile: boolean` we set `fpm-ui#device`
-        // and `fpm-ui#viewport-orientation` etc.
-        return width <= 800;
+        // and `fpm-ui#view-port-orientation` etc.
+        return width <= 768;
     }
 
     window.show_main = function () {
