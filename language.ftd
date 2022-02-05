@@ -167,7 +167,7 @@ padding: 10
 -- ftd.text: $msg
 width: fill
 color: $ft.neutral
-font: Roboto
+font: Lato
 
 
 -- ftd.row:
@@ -178,7 +178,7 @@ width: fill
 width: fill
 align: right
 color: $ft.neutral
-font: Roboto
+font: Lato
 
 
 -- container: outer
