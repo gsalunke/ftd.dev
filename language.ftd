@@ -194,7 +194,7 @@ width: fill
 width: fill
 color: $ft.neutral-800
 color if $fpm.dark-mode: $ft.neutral
-font: Roboto
+font: Lato
 
 
 We support **markdown** as well.
