@@ -4,7 +4,7 @@
 zip: github.com/fifthtry/ftd.dev/archive/refs/heads/main.zip
 language: en
 
--- fpm.dependency: https://fifthtry.github.io/Blue-Sapphire-Theme/
+-- fpm.dependency: fifthtry.github.io/Blue-Sapphire-Theme
 
 -- fpm.font: Roboto
 style: normal
